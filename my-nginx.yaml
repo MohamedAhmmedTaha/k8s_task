@@ -1,16 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: null
+  creationTimestamp: "2025-04-26T13:48:35Z"
+  generation: 1
   labels:
     app: nginx-deploy
   name: nginx-deploy
+  namespace: default
+  resourceVersion: "11681"
+  uid: b70dbb83-277c-48c6-90d3-087297a504f1
 spec:
+  progressDeadlineSeconds: 600
   replicas: 3
+  revisionHistoryLimit: 10
   selector:
     matchLabels:
       app: nginx-deploy
-  strategy: {}
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
   template:
     metadata:
       creationTimestamp: null
@@ -19,6 +29,43 @@ spec:
     spec:
       containers:
       - image: nginx
+        imagePullPolicy: Always
         name: nginx
         resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
 status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: "2025-04-26T13:48:35Z"
+  labels:
+    app: nginx-deploy
+  name: nginx-deploy
+  namespace: default
+  resourceVersion: "11704"
+  uid: 0e048910-4cdb-4b52-819e-1e77bd571688
+spec:
+  clusterIP: 10.100.4.247
+  clusterIPs:
+  - 10.100.4.247
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  ports:
+  - port: 99
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: nginx-deploy
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
