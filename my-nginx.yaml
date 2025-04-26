@@ -1,26 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  creationTimestamp: "2025-04-26T13:48:35Z"
-  generation: 1
+  creationTimestamp: null
   labels:
     app: nginx-deploy
   name: nginx-deploy
-  namespace: default
-  resourceVersion: "11681"
-  uid: b70dbb83-277c-48c6-90d3-087297a504f1
 spec:
-  progressDeadlineSeconds: 600
   replicas: 3
-  revisionHistoryLimit: 10
   selector:
     matchLabels:
       app: nginx-deploy
-  strategy:
-    rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 25%
-    type: RollingUpdate
+  strategy: {}
   template:
     metadata:
       creationTimestamp: null
@@ -29,32 +19,24 @@ spec:
     spec:
       containers:
       - image: nginx
-        imagePullPolicy: Always
         name: nginx
         resources: {}
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
-      dnsPolicy: ClusterFirst
-      restartPolicy: Always
-      schedulerName: default-scheduler
-      securityContext: {}
-      terminationGracePeriodSeconds: 30
 status: {}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  creationTimestamp: "2025-04-26T13:48:35Z"
+  creationTimestamp: "2025-04-26T14:01:59Z"
   labels:
     app: nginx-deploy
   name: nginx-deploy
   namespace: default
-  resourceVersion: "11704"
-  uid: 0e048910-4cdb-4b52-819e-1e77bd571688
+  resourceVersion: "12440"
+  uid: 6c28a7c5-461a-4674-a0f0-2da2278864d0
 spec:
-  clusterIP: 10.100.4.247
+  clusterIP: 10.101.179.208
   clusterIPs:
-  - 10.100.4.247
+  - 10.101.179.208
   internalTrafficPolicy: Cluster
   ipFamilies:
   - IPv4
