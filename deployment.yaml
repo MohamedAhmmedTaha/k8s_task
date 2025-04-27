@@ -6,7 +6,7 @@ metadata:
     app: kubernetes-bootcamp
   name: kubernetes-bootcamp
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: kubernetes-bootcamp
@@ -18,7 +18,11 @@ spec:
         app: kubernetes-bootcamp
     spec:
       containers:
-      - image: gcr.io/google-samples/kubernetes-bootcamp:v1
-        name: kubernetes-bootcamp
+      - image: busybox
+        name: busybox
+        command: ["sleep", "3600"]
+        env:
+        - name: NAME
+          value: "Taha"
         resources: {}
 status: {}
