@@ -24,5 +24,10 @@ spec:
         env:
         - name: NAME
           value: "Taha"
+        - name: age
+          valueFrom:
+            configMapKeyRef:
+              name: my-configmag
+              key: my-nice-age 
         resources: {}
 status: {}
